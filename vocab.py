@@ -24,7 +24,7 @@ def duplicate_handler():
     from same name possesing rows
     '''
 
-    df = pd.read_csv('/home/skipper/vocab.csv')
+    df = pd.read_csv(f'{home}/vocab.csv')
 
     # Returns True if whole row is duplicate
     any_duplicate_rows = df.duplicated().any()
@@ -32,10 +32,10 @@ def duplicate_handler():
     # If whole rows are duplicate then simply remove duplicates
     if any_duplicate_rows : 
         df.drop_duplicates(inplace = True)
-        df.to_csv('/home/skipper/vocab.csv',index = False)
+        df.to_csv(f'{home}/vocab.csv',index = False)
         print("Duplicate Rows were removed....\n")
 
-    df = pd.read_csv('/home/skipper/vocab.csv')
+    df = pd.read_csv(f'{home}/vocab.csv')
 
     # Returns True if there any same names in Word Column
     any_duplicate_names = df.duplicated(subset = ['Word']).any()
@@ -52,7 +52,7 @@ def duplicate_handler():
         
         duplicate_index.remove(choice)
         df.drop(df.index[duplicate_index],inplace = True)
-        df.to_csv('/home/skipper/vocab.csv',index = False)
+        df.to_csv(f'{home}/vocab.csv',index = False)
 
         print("\nAll other duplicate word entries were deleted ... \n")
 
@@ -126,10 +126,10 @@ def get_vocabulary(query):
     meaning_one = meaning_one.replace(';', ',')
     print("Saving to file....")
 
-    file_exists = os.path.isfile('/home/skipper/vocab.csv')
+    file_exists = os.path.isfile(f'{home}/vocab.csv')
 
 
-    with open('/home/skipper/vocab.csv','a',newline='') as file:
+    with open(f'{home}/vocab.csv','a',newline='') as file:
 
         fieldnames = ['Word','Short summary','Meaning']
 
@@ -146,7 +146,7 @@ def get_vocabulary(query):
 
 def revision_mode():
 
-    file_exists = os.path.isfile('/home/skipper/vocab.csv')
+    file_exists = os.path.isfile(f'{home}/vocab.csv')
 
     if not file_exists : 
         print("No vocab.csv file exists.. Please first search some few words using -w argument")
@@ -155,7 +155,7 @@ def revision_mode():
     words = []
     summary = []
     meaning = []
-    with open('/home/skipper/vocab.csv','r') as file : 
+    with open(f'{home}/vocab.csv','r') as file : 
         csv_reader = csv.reader(file,delimiter = ',')
         next(csv_reader)
         for row in csv_reader:
@@ -208,6 +208,7 @@ def revision_mode():
 
 if __name__ == '__main__':
 
+    home = os.environ.get("HOME")
 
     parser = argparse.ArgumentParser(description = 'Vocabulary Tracker')
     parser.add_argument('-r','--rev',action = 'store_true',help = 'Revision mode')
