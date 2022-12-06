@@ -1,4 +1,4 @@
-#! /opt/homebrew/bin/python3
+#! /Users/smartyape/miniconda3/envs/scaletorch/bin/python
 
 # Created alias in .zshrc
 # firstly run this : chmod +x vocab.py
